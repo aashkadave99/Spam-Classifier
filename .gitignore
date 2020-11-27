@@ -1,4 +1,3 @@
 __pycache__
 .vscode
-SpamData/02_Training/.DS_Store
-SpamData/03_Testing/.DS_Store
+SpamData
