@@ -54,3 +54,25 @@ def clean_msg(message, stemmer= PorterStemmer(), stop_words=set(stopwords.words(
 
     return filtered_words
 
+def sparse_matrix(df, index_words, labels): 
+    
+    #df: dataframe with words in the columns with a document id as an index (X_train or X_test) ; indexed_words: index of words ordered by word_id
+    #returns sparse matrix
+
+    nr_rows = df.shape[0]
+    nr_cols = df.shape[1]
+    word_set = set(index_words)
+    dictList = []
+
+    for i in range(nr_rows):
+        for j in range(nr_cols):
+            word = df.iat[i,j]
+            if word in word_set:
+                doc_id = df.index[i]
+                word_id = index_words.get_loc(word)
+                cat = labels.at[doc_id]
+                item = {'LABEL':cat, 'DOC_ID':doc_id, 'OCCURENCE':1, 'WORD_ID':word_id}
+                dictList.append(item)
+
+    return pd.DataFrame(dictList) 
+
